@@ -54,7 +54,7 @@ public class MapDAO
     return getData().get(id);
   }
 
-  public Sink select(Sink sink, Integer skip, Integer limit, Comparator order, Predicate predicate) {
+  public Sink select_(Sink sink, Integer skip, Integer limit, Comparator order, Predicate predicate) {
     if ( sink == null ) {
       sink = new ListSink();
     }

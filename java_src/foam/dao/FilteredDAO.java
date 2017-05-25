@@ -25,8 +25,8 @@ public class FilteredDAO
         });
   }
 
-  public Sink select(Sink s, Integer skip, Integer limit, Comparator order, Predicate predicate) {
-    return super.select(s, skip, limit, order, getPredicate(predicate));
+  public Sink select_(Sink s, Integer skip, Integer limit, Comparator order, Predicate predicate) {
+    return super.select_(s, skip, limit, order, getPredicate(predicate));
   }
 
   public void removeAll(Integer skip, Integer limit, Comparator order, Predicate predicate) {

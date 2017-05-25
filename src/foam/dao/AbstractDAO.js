@@ -1,18 +1,7 @@
 /**
  * @license
- * Copyright 2016 Google Inc. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Copyright 2017 The FOAM Authors. All Rights Reserved.
+ * http://www.apache.org/licenses/LICENSE-2.0
  */
 
 foam.CLASS({
@@ -280,7 +269,7 @@ foam.CLASS({
       of: 'foam.dao.DAO',
       name: 'delegate',
       topics: [ 'on' ], // TODO: Remove this when all users of it are updated.
-      forwards: [ 'put', 'remove', 'find', 'select', 'removeAll' ]
+      forwards: [ 'put', 'remove', 'find', 'select_', 'removeAll' ]
     }
   ],
 
@@ -292,8 +281,8 @@ foam.CLASS({
       });
     },
 
-    function select(sink, skip, limit, order, predicate) {
-      return this.delegate.select(
+    function select_(sink, skip, limit, order, predicate) {
+      return this.delegate.select_(
         sink, skip, limit, order,
         predicate ?
           this.And.create({ args: [this.predicate, predicate] }) :
@@ -332,8 +321,8 @@ foam.CLASS({
   ],
 
   methods: [
-    function select(sink, skip, limit, order, predicate) {
-      return this.delegate.select(sink, skip, limit, order || this.comparator, predicate);
+    function select_(sink, skip, limit, order, predicate) {
+      return this.delegate.select_(sink, skip, limit, order || this.comparator, predicate);
     },
     function removeAll(skip, limit, order, predicate) {
       return this.delegate.removeAll(skip, limit, order || this.comparator, predicate);
@@ -357,8 +346,8 @@ foam.CLASS({
   ],
 
   methods: [
-    function select(sink, skip, limit, order, predicate) {
-      return this.delegate.select(sink, this.skip_, limit, order, predicate);
+    function select_(sink, skip, limit, order, predicate) {
+      return this.delegate.select_(sink, this.skip_, limit, order, predicate);
     },
     function removeAll(skip, limit, order, predicate) {
       return this.delegate.removeAll(this.skip_, limit, order, predicate);
@@ -382,8 +371,8 @@ foam.CLASS({
   ],
 
   methods: [
-    function select(sink, skip, limit, order, predicate) {
-      return this.delegate.select(
+    function select_(sink, skip, limit, order, predicate) {
+      return this.delegate.select_(
         sink, skip,
         limit !== undefined ? Math.min(this.limit_, limit) : this.limit_,
         order, predicate);
