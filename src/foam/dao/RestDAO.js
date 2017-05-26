@@ -81,7 +81,7 @@ foam.CLASS({
           .then(this.onFindResponse);
     },
 
-    function select(sink, skip, limit, order, predicate) {
+    function select_(sink, skip, limit, order, predicate) {
       /**
        * GET baseURL
        * { skip, limit, order, predicate }
@@ -110,6 +110,10 @@ foam.CLASS({
       }).send().then(this.onResponse.bind(this, 'select'))
           .then(this.onSelectResponse.bind(
               this, sink || this.ArraySink.create()));
+    },
+
+    function select(sink) {
+      return this.select_(sink, 0,  Number.MAX_SAFE_INTEGER, null, null);
     },
 
     function removeAll(skip, limit, order, predicate) {

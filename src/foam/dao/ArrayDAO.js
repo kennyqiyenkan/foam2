@@ -93,6 +93,10 @@ foam.CLASS({
       });
     },
 
+    function select(sink) {
+      return this.select_(sink, 0,  Number.MAX_SAFE_INTEGER, null, null);
+    },
+
     function removeAll(skip, limit, order, predicate) {
       predicate = predicate || this.True.create();
       skip = skip || 0;

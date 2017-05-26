@@ -36,6 +36,10 @@ foam.CLASS({
         if ( obj ) return obj.clone(self);
         return null;
       });
+    },
+    
+    function select(sink) {
+      return this.select_(sink, 0,  Number.MAX_SAFE_INTEGER, null, null);
     }
     // TODO: select() too?
   ]

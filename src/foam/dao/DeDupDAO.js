@@ -34,6 +34,10 @@ foam.CLASS({
       return this.delegate.put(obj);
     },
 
+    function select(sink) {
+      return this.select_(sink, 0,  Number.MAX_SAFE_INTEGER, null, null);
+    },
+
     /** Internalizes strings in the given object.
       @private */
     function dedup(obj) {

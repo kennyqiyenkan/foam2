@@ -301,6 +301,10 @@ foam.CLASS({
           this.predicate);
     },
 
+    function select(sink) {
+      return this.select_(sink, 0,  Number.MAX_SAFE_INTEGER, null, null);
+    },
+
     function removeAll(skip, limit, order, predicate) {
       return this.delegate.removeAll(
         skip, limit, order,
@@ -336,6 +340,9 @@ foam.CLASS({
     function select_(sink, skip, limit, order, predicate) {
       return this.delegate.select_(sink, skip, limit, order || this.comparator, predicate);
     },
+    function select(sink) {
+      return this.select_(sink, 0,  Number.MAX_SAFE_INTEGER, null, null);
+    },
     function removeAll(skip, limit, order, predicate) {
       return this.delegate.removeAll(skip, limit, order || this.comparator, predicate);
     },
@@ -360,6 +367,9 @@ foam.CLASS({
   methods: [
     function select_(sink, skip, limit, order, predicate) {
       return this.delegate.select_(sink, this.skip_, limit, order, predicate);
+    },
+    function select(sink) {
+      return this.select_(sink, 0,  Number.MAX_SAFE_INTEGER, null, null);
     },
     function removeAll(skip, limit, order, predicate) {
       return this.delegate.removeAll(this.skip_, limit, order, predicate);
@@ -388,6 +398,10 @@ foam.CLASS({
         sink, skip,
         limit !== undefined ? Math.min(this.limit_, limit) : this.limit_,
         order, predicate);
+    },
+
+    function select(sink) {
+      return this.select_(sink, 0,  Number.MAX_SAFE_INTEGER, null, null);
     },
 
     function removeAll(skip, limit, order, predicate) {

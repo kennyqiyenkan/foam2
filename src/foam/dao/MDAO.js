@@ -209,7 +209,7 @@ foam.CLASS({
       );
     },
 
-    function select(sink, skip, limit, order, predicate) {
+    function select_(sink, skip, limit, order, predicate) {
       sink = sink || this.ArraySink.create();
       var plan;
 //console.log("----select");
@@ -238,6 +238,10 @@ foam.CLASS({
           return Promise.reject(err);
         }
       );
+    },
+
+    function select(sink) {
+      return this.select_(sink, 0,  Number.MAX_SAFE_INTEGER, null, null);
     },
 
     function planForOr(sink, skip, limit, order, predicate) {
