@@ -399,7 +399,7 @@ foam.CLASS({
     {
       name: 'selectedClass',
       expression: function (path) {
-        return this.lookup(path, true);
+        return foam.lookup(path, true);
       }
     },
     {

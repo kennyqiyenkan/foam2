@@ -98,7 +98,7 @@ foam.CLASS({
         payload = JSON.parse(payload);
 
         //        if ( obj.id ) {
-        var o2 = foam.json.parseString(payload.data, this);
+          var o2 = foam.json.parse(foam.json.parseString(payload.data));
           if ( this.timestampProperty ) {
             this.timestampProperty.set(o2, payload.lastUpdate);
           }
@@ -145,7 +145,8 @@ foam.CLASS({
         try {
           data = JSON.parse(data);
 
-          var obj = foam.json.parseString(data.data, this);
+          var obj = foam.json.parse(
+            foam.json.parseString(data.data));
 
           if ( this.timestampProperty ) {
             this.timestampProperty.set(obj, data.lastUpdate);
@@ -244,7 +245,8 @@ foam.CLASS({
         for ( var key in data ) {
           if ( detached ) break;
 
-          var obj = foam.json.parseString(data[key].data, this);
+          var obj = foam.json.parse(
+            foam.json.parseString(data[key].data));
           if ( this.timestampProperty ) {
             this.timestampProperty.set(obj, data[key].lastUpdate);
           }
@@ -277,7 +279,7 @@ foam.CLASS({
         }
 
         for ( var key in data.data ) {
-          var obj = foam.json.parseString(data.data[key].data, this);
+          var obj = foam.json.parse(foam.json.parseString(data.data[key].data));
           if ( this.timestampProperty ) {
             this.timestampProperty.set(obj, data.data[key].lastUpdate);
           }
@@ -291,7 +293,7 @@ foam.CLASS({
           this.on.remove.pub(obj);
           return;
         }
-        var obj = foam.json.parseString(data.data.data, this);
+        var obj = foam.json.parse(foam.json.parseString(data.data.data));
         if ( this.timestampProperty ) {
           this.timestampProperty.set(obj, data.data.lastUpdate);
         }
@@ -309,7 +311,7 @@ foam.CLASS({
           this.on.put.pub(obj);
         }.bind(this));
 
-        // var obj = foam.json.parseString(data.data, this);
+        // var obj = foam.json.parse(foam.json.parseString(data.data));
         // this.on.put.pub(obj);
       } else if ( path.indexOf('/lastUpdate') === path.length - 11 ) {
         // Timestamp of an existing row updated, do anything?

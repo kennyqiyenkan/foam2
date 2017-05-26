@@ -19,15 +19,7 @@ foam.CLASS({
   refines: 'foam.core.Property',
 
   properties: [
-    {
-      name: 'validateObj',
-      expression: function(name, label, required) {
-        return !required ? null : [[name],
-          function() {
-            return !this.hasOwnProperty(name) && (label + ' is required.');
-          }]
-      },
-    },
+    'validateObj'
   ]
 });
 

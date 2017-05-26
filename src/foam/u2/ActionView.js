@@ -109,7 +109,6 @@ foam.CLASS({
 
     function initCls() {
       this.addClass(this.myClass());
-      this.addClass(this.myClass(this.action.name));
     }
   ],
 

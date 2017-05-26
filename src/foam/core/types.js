@@ -462,7 +462,7 @@ foam.CLASS({
         return of.isInstance(v) ?
             v :
             ( v.class ?
-                this.lookup(v.class) :
+                foam.lookup(v.class) :
                 of ).create(v, this.__subContext__);
       }
     }

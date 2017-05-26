@@ -396,10 +396,6 @@ foam.CLASS({
     'foam.box.RegisterSelfMessage'
   ],
 
-  imports: [
-    'fonParser'
-  ],
-
   properties: [
     {
       class: 'Boolean',
@@ -435,7 +431,7 @@ foam.CLASS({
 
     function addSocket(socket) {
       var s1 = socket.message.sub(function(s, _, m) {
-        var m = this.fonParser.parseString(m);
+        var m = foam.json.parseString(m, this);
 
         if ( this.RegisterSelfMessage.isInstance(m) ) {
           var named = foam.box.NamedBox.create({

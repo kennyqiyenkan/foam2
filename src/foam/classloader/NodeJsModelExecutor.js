@@ -84,7 +84,7 @@ foam.CLASS({
       return X.arequire(modelId)
         .catch(console.log)
         .then(function() {
-          return X.lookup(modelId).create(modelArgs, self).execute();
+          return foam.lookup(modelId).create(modelArgs, self).execute();
         })
         .catch(console.log);
     }

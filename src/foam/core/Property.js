@@ -544,10 +544,9 @@ foam.CLASS({
           for ( var i = 0 ; i < subs.length ; i++ ) subs[i].detach();
         };
         for ( var i = 0 ; i < argNames.length ; i++ ) {
-          var slot = this.slot(argNames[i]);
-          var s = slot.sub(l);
+          var s = this.slot(argNames[i]).sub(l);
           s && subs.push(s);
-          args[i] = slot.get();
+          args[i] = this[argNames[i]];
         }
         var ret = e.apply(this, args);
         if ( ret === undefined ) this.warn('Expression returned undefined');

@@ -356,12 +356,6 @@ foam.CLASS({
   ],
 
   methods: [
-    function init() {
-      this.SUPER();
-
-      console.log('Deprecated use of foam.u2.TableView. Use foam.u2.view.TableView instead.');
-    },
-
     function initE() {
       // Configure columns if 'config' set.
       if ( this.config ) {

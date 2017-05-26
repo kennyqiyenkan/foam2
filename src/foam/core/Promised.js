@@ -110,7 +110,7 @@ foam.CLASS({
       var pendingState   = 'Pending' + foam.String.capitalize(myName);
       var fulfilledState = 'Fulfilled' + foam.String.capitalize(myName);
 
-      var delegate = this.lookup(this.of);
+      var delegate = foam.lookup(this.of);
 
       function resolveName(name) {
         var m = delegate.getAxiomByName(name);

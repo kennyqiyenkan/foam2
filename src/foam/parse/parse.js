@@ -737,13 +737,13 @@ foam.CLASS({
 
   methods: [
     function seq() {
-      return this.lookup('foam.parse.Sequence').create({
+      return foam.lookup('foam.parse.Sequence').create({
         args: Array.from(arguments)
       });
     },
 
     function repeat0(p, delim, min) {
-      return this.lookup('foam.parse.Repeat0').create({
+      return foam.lookup('foam.parse.Repeat0').create({
         p: p,
         minimum: min || 0,
         delimiter: delim
@@ -751,38 +751,38 @@ foam.CLASS({
     },
 
     function simpleAlt() {
-      return this.lookup('foam.parse.Alternate').create({
+      return foam.lookup('foam.parse.Alternate').create({
         args: Array.from(arguments)
       });
     },
 
     function alt() {
-      return this.lookup('foam.parse.Alternate').create({
+      return foam.lookup('foam.parse.Alternate').create({
         args: Array.from(arguments)
       });
     },
 
     function sym(name) {
-      return this.lookup('foam.parse.Symbol').create({
+      return foam.lookup('foam.parse.Symbol').create({
         name: name
       });
     },
 
     function seq1(n) {
-      return this.lookup('foam.parse.Sequence1').create({
+      return foam.lookup('foam.parse.Sequence1').create({
         n: n,
         args: Array.from(arguments).slice(1)
       });
     },
 
     function seq0() {
-      return this.lookup('foam.parse.Sequence0').create({
+      return foam.lookup('foam.parse.Sequence0').create({
         args: Array.from(arguments)
       });
     },
 
     function repeat(p, delim, min) {
-      return this.lookup('foam.parse.Repeat').create({
+      return foam.lookup('foam.parse.Repeat').create({
         p: p,
         minimum: min || 0,
         delimiter: delim
@@ -790,65 +790,65 @@ foam.CLASS({
     },
 
     function plus(p, delim) {
-      return this.lookup('foam.parse.Plus').create({
+      return foam.lookup('foam.parse.Plus').create({
         p: p,
         delimiter: delim
       });
     },
 
     function str(p) {
-      return this.lookup('foam.parse.String').create({
+      return foam.lookup('foam.parse.String').create({
         p: p
       });
     },
 
     function substring(p) {
-      return this.lookup('foam.parse.Substring').create({
+      return foam.lookup('foam.parse.Substring').create({
         p: p
       });
     },
 
     function range(a, b) {
-      return this.lookup('foam.parse.Range').create({
+      return foam.lookup('foam.parse.Range').create({
         from: a,
         to: b
       });
     },
 
     function notChars(s) {
-      return this.lookup('foam.parse.NotChars').create({
+      return foam.lookup('foam.parse.NotChars').create({
         string: s
       });
     },
 
     function chars(s) {
-      return this.lookup('foam.parse.Chars').create({
+      return foam.lookup('foam.parse.Chars').create({
         string: s
       });
     },
 
     function not(p, opt_else) {
-      return this.lookup('foam.parse.Not').create({
+      return foam.lookup('foam.parse.Not').create({
         p: p,
         else: opt_else
       });
     },
 
     function optional(p) {
-      return this.lookup('foam.parse.Optional').create({
+      return foam.lookup('foam.parse.Optional').create({
         p: p
       });
     },
 
     function literal(s, value) {
-      return this.lookup('foam.parse.Literal').create({
+      return foam.lookup('foam.parse.Literal').create({
         s: s,
         value: value
       });
     },
 
     function literalIC(s, value) {
-      return this.lookup('foam.parse.LiteralIC').create({
+      return foam.lookup('foam.parse.LiteralIC').create({
         s: s,
         value: value
       });

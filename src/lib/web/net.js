@@ -97,10 +97,6 @@ foam.CLASS({
     'foam.box.Message'
   ],
 
-  imports: [
-    'fonParser'
-  ],
-
   properties: [
     {
       name: 'delegate'
@@ -110,7 +106,7 @@ foam.CLASS({
   methods: [
     function addSocket(socket) {
       var sub1 = socket.message.sub(function onMessage(s, _, msg) {
-        msg = this.fonParser.parseString(msg);
+        msg = foam.json.parseString(msg, this);
 
         if ( ! this.Message.isInstance(msg) ) {
           console.warn("Got non-message object.", msg);
