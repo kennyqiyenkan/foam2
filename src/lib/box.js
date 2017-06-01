@@ -1205,6 +1205,66 @@ foam.CLASS({
 
 foam.CLASS({
   package: 'foam.box',
+  name: 'ClassWhitelistContext',
+  exports: [
+    'lookup'
+  ],
+  properties: [
+    {
+      class: 'StringArray',
+      name: 'whitelist'
+    },
+    {
+      name: 'whitelist_',
+      expression: function(whitelist) {
+        var w = {};
+        for ( var i = 0 ; i < whitelist.length ; i++ ) {
+          w[whitelist[i]] = true;
+        }
+        return w;
+      }
+    }
+  ],
+  methods: [
+    {
+      class: 'ContextMethod',
+      name: 'lookup',
+      code: function(X, id) {
+        if ( ! this.whitelist_[id] ) {
+          throw new Error('Class "' + id + '" is not whitelisted.');
+        }
+        return this.__context__.lookup.call(X, id);
+      }
+    }
+  ]
+});
+
+foam.CLASS({
+  package: 'foam.box',
+  name: 'LoggedLookupContext',
+  exports: [
+    'lookup',
+  ],
+  properties: [
+    {
+      class: 'Map',
+      name: 'record'
+    }
+  ],
+  methods: [
+    {
+      class: 'ContextMethod',
+      name: 'lookup',
+      code: function(X, id) {
+        this.record[id] = id;
+        return this.__context__.lookup.call(X, id);
+      }
+    }
+  ]
+});
+
+foam.CLASS({
+  package: 'foam.box',
   name: 'Context',
 
   requires: [
@@ -1288,6 +1348,32 @@ foam.CLASS({
         });
         me.delegate = this.registry;
         return me;
+      }
+    },
+    {
+      class: 'Boolean',
+      name: 'unsafe',
+      value: true
+    },
+    {
+      class: 'StringArray',
+      name: 'classWhitelist'
+    },
+    {
+      name: 'fonParser',
+      hidden: true,
+      factory: function() {
+        // TODO: Better way to inject the class whitelist.
+        if ( this.unsafe ) {
+          var context = this.LoggedLookupContext.create();
+          console.warn('**** Boxes are running in UNSAFE mode.  Turn this off before you go to production!');
+        } else {
+          var context = this.ClassWhitelistContext.create({
+            whitelist: this.classWhitelist
+          });
+        }
+
+        return this.FON.create({ creationContext: context.__subContext__ });
       }
     }
   ]
