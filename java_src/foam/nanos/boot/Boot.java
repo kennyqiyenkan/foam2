@@ -14,13 +14,15 @@ import foam.mlang.*;
 
 public class Boot {
   protected DAO serviceDAO_;
+  protected DAO userDAO_;
+  protected DAO groupDAO_;
   protected X   root_ = new ProxyX();
 
   public Boot() {
+    //Used for all the services that will be required when Booting
     serviceDAO_ = new MapDAO();
     ((MapDAO) serviceDAO_).setOf(NSpec.getOwnClassInfo());
     ((MapDAO) serviceDAO_).setX(root_);
-    loadTestData();
 
     //Used to hold all of the users in our system
     userDAO_ = new MapDAO();
@@ -39,11 +41,14 @@ public class Boot {
     ((AbstractDAO) serviceDAO_).select(new AbstractSink() {
       public void put(FObject obj, Detachable sub) {
         NSpec sp = (NSpec) obj;
-        System.out.println("NSpec: " + sp.getName());
-
         root_.putFactory(sp.getName(), new SingletonFactory(new NSpecFactory(sp)));
       }
     });
+
+    /**
+     * Revert root_ to non ProxyX to avoid letting children add new bindings.
+     */
+    root_ = root_.put("firewall", "firewall");
 
     ((AbstractDAO) serviceDAO_.where(foam.mlang.MLang.EQ(NSpec.LAZY, false))).select(new AbstractSink() {
       public void put(FObject obj, Detachable sub) {
