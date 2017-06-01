@@ -19,10 +19,6 @@ public class EnabledAwareDAO
     return super.select_(s, skip, limit, order, PREDICATE);
   }
 
-  public Sink select(Sink sink) {
-    return this.select_(sink, 0, Integer.MAX_VALUE, null, null);
-  }
-
   public void removeAll(Integer skip, Integer limit, Comparator order, Predicate predicate) {
     super.removeAll(skip, limit, order, PREDICATE);
   }

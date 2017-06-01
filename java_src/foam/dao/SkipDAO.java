@@ -19,10 +19,6 @@ public class SkipDAO
     return super.select_(s, skip_, limit, order, predicate);
   }
 
-  public Sink select(Sink sink) {
-    return this.select_(sink, 0, Integer.MAX_VALUE, null, null);
-  }
-
   public void removeAll(Integer skip, Integer limit, Comparator order, Predicate predicate) {
     super.removeAll(skip_, limit, order, predicate);
   }
