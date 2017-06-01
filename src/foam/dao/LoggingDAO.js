@@ -53,7 +53,7 @@ foam.CLASS({
     },
 
     function select_(sink, skip, limit, order, predicate) {
-      this.logger('select', skip, limit, order, predicate);
+      this.logger('select_', skip, limit, order, predicate);
       sink = sink || this.ArraySink.create();
       if ( this.logReads ) {
         var put = sink.put.bind(sink);
@@ -69,8 +69,8 @@ foam.CLASS({
       return this.SUPER(sink, skip, limit, order, predicate);
     },
 
-    function removeAll(sink, skip, limit, order, predicate) {
-      this.logger('removeAll', skip, limit, order, predicate);
+    function removeAll_(sink, skip, limit, order, predicate) {
+      this.logger('removeAll_', skip, limit, order, predicate);
       return this.SUPER(sink, skip, limit, order, predicate);
     },
 

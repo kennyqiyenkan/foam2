@@ -227,6 +227,10 @@ foam.CLASS({
       return this.select_(sink, undefined, undefined, undefined, undefined);
     },
 
+    function removeAll() {
+      return this.removeAll_(undefined, undefined, undefined, undefined);
+    },
+
     // Placeholder functions to that selecting from DAO to DAO works.
     /** @private */
     function eof() {},
@@ -285,7 +289,7 @@ foam.CLASS({
       of: 'foam.dao.DAO',
       name: 'delegate',
       topics: [ 'on' ], // TODO: Remove this when all users of it are updated.
-      forwards: [ 'put', 'remove', 'find','select_', 'removeAll' ]
+      forwards: [ 'put', 'remove', 'find','select_', 'removeAll_' ]
     }
   ],
 
@@ -305,8 +309,8 @@ foam.CLASS({
           this.predicate);
     },
 
-    function removeAll(skip, limit, order, predicate) {
-      return this.delegate.removeAll(
+    function removeAll_(skip, limit, order, predicate) {
+      return this.delegate.removeAll_(
         skip, limit, order,
         predicate ?
           this.And.create({ args: [this.predicate, predicate] }) :
@@ -340,8 +344,8 @@ foam.CLASS({
     function select_(sink, skip, limit, order, predicate) {
       return this.delegate.select_(sink, skip, limit, order || this.comparator, predicate);
     },
-    function removeAll(skip, limit, order, predicate) {
-      return this.delegate.removeAll(skip, limit, order || this.comparator, predicate);
+    function removeAll_(skip, limit, order, predicate) {
+      return this.delegate.removeAll_(skip, limit, order || this.comparator, predicate);
     },
     function listen(sink, skip, limit, order, predicate) {
       return this.delegate.listen(sink, skip, limit, order || this.comparator, predicate);
@@ -365,8 +369,8 @@ foam.CLASS({
     function select_(sink, skip, limit, order, predicate) {
       return this.delegate.select_(sink, this.skip_, limit, order, predicate);
     },
-    function removeAll(skip, limit, order, predicate) {
-      return this.delegate.removeAll(this.skip_, limit, order, predicate);
+    function removeAll_(skip, limit, order, predicate) {
+      return this.delegate.removeAll_(this.skip_, limit, order, predicate);
     },
     function listen(sink, skip, limit, order, predicate) {
       return this.delegate.listen(sink, this.skip_, limit, order, predicate);
@@ -394,8 +398,8 @@ foam.CLASS({
         order, predicate);
     },
 
-    function removeAll(skip, limit, order, predicate) {
-      return this.delegate.removeAll(
+    function removeAll_(skip, limit, order, predicate) {
+      return this.delegate.removeAll_(
         skip,
         limit !== undefined ? Math.min(this.limit_, limit) : this.limit_,
         order, predicate);
