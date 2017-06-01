@@ -112,10 +112,6 @@ foam.CLASS({
               this, sink || this.ArraySink.create()));
     },
 
-    function select(sink) {
-      return this.select_(sink, 0,  Number.MAX_SAFE_INTEGER, null, null);
-    },
-
     function removeAll(skip, limit, order, predicate) {
       /**
        * POST baseURL/removeAll

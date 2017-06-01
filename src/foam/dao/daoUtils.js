@@ -56,9 +56,6 @@ foam.CLASS({
       listener.onDetach(listener.dao$.follow(this.delegate$));
 
       return listener;
-    },
-    function select(sink) {
-      return this.select_(sink, 0,  Number.MAX_SAFE_INTEGER, null, null);
     }
   ]
 });
@@ -141,7 +138,7 @@ foam.CLASS({
     {
       class: 'Promised',
       of: 'foam.dao.DAO',
-      methods: [ 'put', 'remove', 'find', 'select', 'removeAll', 'listen' ],
+      methods: [ 'put', 'remove', 'find', 'select_', 'removeAll', 'listen' ],
       name: 'promise'
     }
   ]

@@ -240,10 +240,6 @@ foam.CLASS({
       );
     },
 
-    function select(sink) {
-      return this.select_(sink, 0,  Number.MAX_SAFE_INTEGER, null, null);
-    },
-
     function planForOr(sink, skip, limit, order, predicate) {
       // if there's a limit, add skip to make sure we get enough results
       //   from each subquery. Our sink will throw out the extra results

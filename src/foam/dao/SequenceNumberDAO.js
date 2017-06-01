@@ -97,10 +97,6 @@ foam.CLASS({
 
         return self.delegate.put(obj);
       });
-    },
-
-    function select(sink) {
-      return this.select_(sink, 0,  Number.MAX_SAFE_INTEGER, null, null);
     }
   ]
 });
