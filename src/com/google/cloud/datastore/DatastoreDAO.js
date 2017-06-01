@@ -159,7 +159,7 @@ foam.CLASS({
               })));
     },
     function removeAll(skip, limit, order, predicate) {
-      return this.select(undefined, skip, limit, order, predicate)
+      return this.select_(undefined, skip, limit, order, predicate)
           .then(this.onRemoveAll);
     },
 
