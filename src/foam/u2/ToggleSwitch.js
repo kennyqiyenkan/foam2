@@ -72,7 +72,6 @@ foam.CLASS({
           content: "";
           padding-right: 14px;
           background-color: rgba(164, 179, 184, 0.5);
-          color: #999999;
           text-align: right;
         }
         ^ .toggleswitch-switch {
@@ -118,7 +117,8 @@ foam.CLASS({
     function initE() {
       this.addClass(this.myClass())
         .start('div').addClass('toggleswitch')
-          .start({class: 'foam.u2.CheckBox', data$: this.data$, label: this.label, showLabel: this.showLabel}).addClass('toggleswitch-checkbox')
+          .start({class: 'foam.u2.CheckBox', data$: this.data$, label: this.label, showLabel: this.showLabel})
+            .addClass('toggleswitch-checkbox')
             .attrs({ name: 'toggleswitch' })
             .setID(id = 'mytoggleswitch')
           .end()
