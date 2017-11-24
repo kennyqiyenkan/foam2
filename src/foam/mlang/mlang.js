@@ -67,7 +67,8 @@ foam.INTERFACE({
       name: 'f',
       args: [
         'obj'
-      ]
+      ],
+      swiftReturns: 'Any?',
     }
   ]
 });
@@ -439,7 +440,13 @@ foam.CLASS({
           if ( this.args[i].f(o) ) return true;
         }
         return false;
-      }
+      },
+      swiftCode: `
+for arg in args {
+  if arg.f(obj) { return true }
+}
+return false
+      `,
     },
 
     function partialEval() {
@@ -947,7 +954,11 @@ foam.CLASS({
   ],
 
   methods: [
-    function f() { return this.value; },
+    {
+      name: 'f',
+      code: function() { return this.value; },
+      swiftCode: `return value`,
+    },
 
     function toString_(x) {
       return typeof x === 'number' ? '' + x :
@@ -1037,7 +1048,12 @@ foam.CLASS({
 
         // First check is so that EQ(Class.PROPERTY, null | undefined) works.
         return ( v1 === undefined && v2 === null ) || foam.util.equals(v1, v2);
-      }
+      },
+      swiftCode: `
+let v1 = (arg1 as! Expr).f(obj)
+let v2 = (arg2 as! Expr).f(obj)
+return FOAM_utils.equals(v1, v2)
+      `,
     },
 
     function reduceAnd(other) {
