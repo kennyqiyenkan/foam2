@@ -155,6 +155,7 @@ foam.CLASS({
   name: 'AbstractBlob',
   abstract: true,
 
+  requires: [ 'foam.blob.SubBlob' ],
   implements: [ 'foam.blob.Blob' ],
 
   methods: [
@@ -180,14 +181,42 @@ foam.CLASS({
 
       return a();
     },
-
-    function slice(offset, length) {
-      return foam.blob.SubBlob.create({
-        parent: this,
-        offset: offset,
-        size: length
-      });
+    {
+      name: 'slice',
+      args: [
+        {
+          name: 'offset',
+          class: 'Int',
+          swiftType: 'Int'
+        },
+        {
+          name: 'length',
+          class: 'Int',
+          swiftType: 'Int'
+        }
+      ],
+      code: function() {`
+return foam.blob.SubBlob.create({
+  parent: this,
+  offset: offset,
+  size: length
+});
+      `},
+      swiftCode: function() {`
+return SubBlob_create([
+  "parent": self,
+  "offset": offset,
+  "size": length
+])
+      `}
     }
+    // function slice(offset, length) {
+    //   return foam.blob.SubBlob.create({
+    //     parent: this,
+    //     offset: offset,
+    //     size: length
+    //   });
+    // }
   ]
 });
 
@@ -271,14 +300,17 @@ foam.CLASS({
     {
       class: 'Blob',
       name: 'parent',
+      swiftType: 'Blob'
     },
     {
       class: 'Long',
-      name: 'offset'
+      name: 'offset',
+      swiftType: 'Int'
     },
     {
       class: 'Long',
       name: 'size',
+      swiftType: 'Int',
       assertValue: function(value) {
         foam.assert(this.offset + value <= this.parent.size, 'Cannot create sub blob beyond end of parent.');
       }
@@ -286,19 +318,59 @@ foam.CLASS({
   ],
 
   methods: [
-    function read(buffer, offset) {
-      if ( buffer.length > this.size - offset) {
-        buffer = buffer.slice(0, this.size - offset);
-      }
+    {
+      name: 'read',
+      args: [
+        {
+          name: 'buffer',
+          swiftType: 'OutputStream'
+        },
+        {
+          class: 'Int',
+          name: 'offset',
+          swiftType: 'Int'
+        }
+      ],
+      code: function() {`
+if ( buffer.length > this.size - offset) {
+  buffer = buffer.slice(0, this.size - offset);
+}
 
-      return this.parent.read(buffer, offset + this.offset);
+return this.parent.read(buffer, offset + this.offset);
+      `},
+      swiftCode: function() {`
+size = min(size, size - offset)
+return parent.read(buffer, offset, size)
+      `}
     },
-    function slice(offset, length) {
-      return foam.blob.SubBlob.create({
-        parent: this.parent,
-        offset: this.offset + offset,
-        size: length
-      });
+    {
+      name: 'slice',
+      args: [
+        {
+          class: 'Int',
+          name: 'offset',
+          swiftType: 'Int'
+        },
+        {
+          class: 'Int',
+          name: 'length',
+          swiftType: 'Int'
+        }
+      ],
+      code: function() {`
+return foam.blob.SubBlob.create({
+  parent: this.parent,
+  offset: this.offset + offset,
+  size: length
+});
+      `},
+      swiftCode: function() {`
+return SubBlob_create([
+  "parent": self.parent,
+  "offset": self.offset + offset,
+  "size": length
+])
+      `}
     }
   ]
 });
@@ -346,7 +418,7 @@ foam.CLASS({
   package: 'foam.blob',
   name: 'IdentifiedBlob',
   extends: 'foam.blob.ProxyBlob',
-  
+
   imports: [
     'blobService'
   ],
@@ -814,7 +886,7 @@ foam.CLASS({
                              this.BlobBlob.create({ blob: this.blobs[id] }) :
                              null);
     },
-    
+
     function urlFor_(x, blob) {
       if ( this.IdentifiedBlob.isInstance(blob) ) {
         return URL.createObjectURL(this.blobs[blob.id]);
