@@ -22,6 +22,11 @@ foam.CLASS({
       name: 'name'
     },
     {
+      class: 'String',
+      documentation: 'Category of region. Eg: State or Union Territory etc.'
+      name: 'category'
+    },
+    {
       class: 'Reference',
       targetDAOKey: 'countryDAO',
       name: 'countryId',
