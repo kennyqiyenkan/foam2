@@ -376,6 +376,7 @@ var classes = [
   'foam.nanos.test.StockSnapshot',
   'foam.nanos.analytics.FoldManagerDAODecorator',
   'foam.nanos.analytics.DAOFoldManager',
+  'foam.nanos.analytics.DAOMonthlyFoldManager',
   'foam.nanos.analytics.DAOReduceManager',
 
   // Testing support
