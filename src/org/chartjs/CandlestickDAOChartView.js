@@ -46,6 +46,7 @@ foam.CLASS({
       name: 'dataUpdate',
       isFramed: true,
       code: function() {
+        if ( ! this.data ) return;
         var self = this;
         self.data
           .orderBy(this.xExpr)

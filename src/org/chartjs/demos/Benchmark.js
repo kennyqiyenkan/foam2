@@ -60,6 +60,33 @@ foam.CLASS({
           }
         ]
       }
+    },
+    {
+      class: 'List',
+      name: 'daoList',
+      factory: function() {
+        return [];
+      },
+      view: {
+        class: 'org.chartjs.AggregatedCandlestickDAOChartView',
+        customDatasetStyling: {
+          TSLA: {
+            steppedLine: true,
+            borderColor: [
+              'rgba(132, 99, 132, 1)'
+            ],
+            backgroundColor: 'rgba(132, 99, 132, 0.3)',
+            label: 'Red Team (TSLA)'
+          },
+          NFLX: {
+            borderColor: [
+              'rgba(54, 50, 235, 1)'
+            ],
+            backgroundColor: 'rgba(54, 50, 235, 0.3)',
+            label: 'Blue Team (NFLX)'
+          }
+        }
+      }
     }
   ],
 
@@ -76,27 +103,46 @@ foam.CLASS({
         var data = [];
         var curValue = 1000;
         var curValue2 = 1000;
+
+        var dao1 = this.MDAO.create({ of: this.Candlestick });
+        var data1 = [];
+        var dao2 = this.MDAO.create({ of: this.Candlestick });
+        var data2 = [];
+
         for ( var i = startTime ; i < endTime ; i += step ) {
-          data.push({
+          var value1 = {
             key: 'NFLX',
             total: curValue,
             count: 1,
             openTime: new Date(i),
             closeTime: new Date(i+step)
-          });
-          data.push({
+          };
+          var value2 = {
             key: 'TSLA',
             total: curValue2,
             count: 1,
             openTime: new Date(i),
             closeTime: new Date(i+step)
-          });
+          };
+          data.push(value1);
+          data.push(value2);
+
+          data1.push(value1);
+          data2.push(value2);
+
           curValue += Math.random()*5 - 2.5;
           curValue2 += Math.random()*5 - 2.5;
         }
-        Promise.all(data.map(d => self.dao.put(foam.nanos.analytics.Candlestick.create(d)))).then(function() {
-          alert('DONE');
-        })
+
+        console.log(data.length);
+        console.log(data1.length);
+        console.log(data2.length);
+
+        data.map(d => self.dao.put(foam.nanos.analytics.Candlestick.create(d)));
+        data1.map(d => dao1.put(foam.nanos.analytics.Candlestick.create(d)));
+        data2.map(d => dao2.put(foam.nanos.analytics.Candlestick.create(d)));
+
+        self.daoList = [dao1, dao2];
       }
     }
   ]

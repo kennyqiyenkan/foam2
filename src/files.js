@@ -579,6 +579,7 @@ FOAM_FILES([
   { name: "org/chartjs/AbstractChartCView" },
   { name: "org/chartjs/CandlestickDAOChartView" },
   { name: "org/chartjs/CandlestickChartInterface" },
+  { name: "org/chartjs/AggregatedCandlestickDAOChartView" },
   { name: "org/chartjs/Pie" },
   { name: "org/chartjs/Bar" },
   { name: "org/chartjs/Line" },
